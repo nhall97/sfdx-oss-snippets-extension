@@ -1,0 +1,20 @@
+{
+    "name": "sfdx-oss-snippets-extension",
+    "displayName": "sfdx-oss-snippets-extension",
+    "description": "Provides snippets for common sfdx packages when packages / 2nd generation packages may be seperate from your metadata repository",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.52.0"
+    },
+    "categories": [
+        "Snippets"
+    ],
+    "contributes": {
+        "snippets": [
+            {
+                "language": "apex",
+                "path": "./snippets/snippets.code-snippets"
+            }
+        ]
+    }
+}
