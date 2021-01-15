@@ -34,14 +34,15 @@ steps:
   displayName: installing npm
 
   #When main branch is updated and succeeds, we want to update version numer, then release to marketplace
-
+  #git push origin HEAD:main
+  
 - bash: |
     git config user.email $(GIT_MAIL)
     git config user.name $(GIT_USERNAME)
     git checkout main
     npm version patch
     git commit -am "package.json version updated [skip ci]"
-    git push origin HEAD:main 
+    git push https://$(GIT_PAT)@github.com/nhall97/sfdx-oss-snippets-extension.git HEAD:main
   displayName: npm version patch
   condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Agent.OS'], 'Linux'))
   env:
