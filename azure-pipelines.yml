@@ -35,7 +35,7 @@ steps:
 
 - bash: |
     echo ">>> Publish"
-    npm deployMarketplace
+    npm run deployMarketplace
   displayName: Publish to Marketplace
   condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Agent.OS'], 'Linux'))
   env:
