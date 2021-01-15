@@ -3,8 +3,6 @@ trigger:
     include:
       - main
 
-
-
 strategy:
   matrix:
     linux:
@@ -52,10 +50,7 @@ steps:
     git commit -a -m "[skip ci] package.json version updated"
     git push origin HEAD:main
   displayName: npm version patch
-  condition: |
-   (and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Agent.OS'], 'Linux')),
-    not(contains(variables['Build.SourceVersionMessage'], '[skip ci]'))
-   )
+  condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux'), not(contains(variables['Build.SourceVersionMessage'], '[skip ci]')))
   env:
     ENV_GIT_USER: $(GIT_USERNAME)
     ENV_GIT_EMAIL: $(GIT_EMAIL)
