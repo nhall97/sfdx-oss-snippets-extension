@@ -1,5 +1,5 @@
 trigger:
-- '*'
+- refs/tags/your-tag-name
 pr:
 - '*'
 
@@ -39,10 +39,10 @@ steps:
     git config --global user.email "$(GIT_USER)"
     git config --global user.name "$(GIT_EMAIL)"
     npm version patch
-    git add -A dist
-    git commit -m version upgraded
+    git add -a
+    git commit -m "version upgraded"
     echo git status
-    git push && git push --tags && rm -rf build/temp
+    git push && git push --tags
   displayName: Update vscode marketplace version
   env:
     ENV_GIT_USER: $(GIT_USER)
