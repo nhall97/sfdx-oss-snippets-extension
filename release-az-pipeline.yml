@@ -38,11 +38,9 @@ steps:
 - bash: |
     git config user.email $(GIT_MAIL)
     git config user.name $(GIT_USER)
-    git checkout -b version
+    git checkout main
     npm version patch
-    git commit -m "package.json version updated [skip ci]"
-    echo git status
-    git 
+    git commit -am "package.json version updated [skip ci]"
     git push origin main 
   displayName: npm version patch
   condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Agent.OS'], 'Linux'))
