@@ -49,7 +49,7 @@ steps:
     git config user.name $(GIT_USERNAME)
     git checkout main
     npm version patch
-    git commit -am "[skip ci] package.json version updated"
+    git commit -a -m "[skip ci] package.json version updated"
     git push origin HEAD:main
   displayName: npm version patch
   condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Agent.OS'], 'Linux'))
