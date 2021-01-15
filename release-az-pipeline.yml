@@ -33,31 +33,21 @@ steps:
     npm install-ci-test
   displayName: installing npm
 
-  #When main branch is updated, we want to deploy to marketplace
+  #When main branch is updated and succeeds, we want to update version numer, then release to marketplace
 
 - bash: |
-    git config --global user.email "$(GIT_USER)"
-    git config --global user.name "$(GIT_EMAIL)"
+    git config user.email "$(GIT_USER)"
+    git config user.name "$(GIT_EMAIL)"
+    git checkout main
     npm version patch
-    git add -a
-    git commit -m "version upgraded"
+    git add -A
+    git commit -m "package.json version updated [skip ci]"
     echo git status
     git push --force origin
-  displayName: Update vscode marketplace version
+  displayName: npm version patch
   env:
     ENV_GIT_USER: $(GIT_USER)
     ENV_GIT_EMAIL: $(GIT_EMAIL)
-
-- task: GitHubRelease@1
-  inputs:
-    gitHubConnection: 'AZ-GH-NH'
-    repositoryName: 'nhall97/sfdx-oss-snippets-extension'
-    action: 'create'
-    target: '$(Build.SourceVersion)'
-    tagSource: 'gitTag'
-    tagPattern: 'v'
-    changeLogCompareToRelease: 'lastFullRelease'
-    changeLogType: 'commitBased'
 
 - bash: |
     echo ">>> Publish"

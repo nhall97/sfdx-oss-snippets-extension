@@ -2,8 +2,6 @@ trigger:
   branches:
     exclude:
       - main
-pr:
-- '*'
 
 strategy:
   matrix:
