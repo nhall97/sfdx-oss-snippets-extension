@@ -36,14 +36,14 @@ steps:
   #When main branch is updated and succeeds, we want to update version numer, then release to marketplace
 
 - bash: |
-    git config user.email $(GIT_USER)
-    git config user.name $(GIT_EMAIL)
-    git checkout main
+    git config user.email $(GIT_MAIL)
+    git config user.name $(GIT_USER)
+    git checkout -b version
     npm version patch
-    git add -A
     git commit -m "package.json version updated [skip ci]"
     echo git status
-    git push --force origin
+    git 
+    git push origin main 
   displayName: npm version patch
   condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Agent.OS'], 'Linux'))
   env:
