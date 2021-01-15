@@ -1,20 +1,17 @@
 # sfdx-oss-snippets-extension README
 
-This is the README for your extension "sfdx-oss-snippets-extension". After writing up a brief description, we recommend including the following sections.
+Provides snippets for common sfdx packages when packages / 2nd generation packages may be seperate from your metadata repository
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+//TODO
+- List of plugs to support
 
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+> If you have package you want supported by this extension, please create an issue.
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+VSCode Version Minimum Supported: 1.44.0
 
 ## Extension Settings
 
@@ -35,17 +32,9 @@ Calling out known issues can help limit users opening duplicate issues against y
 
 Users appreciate release notes as you update your extension.
 
-### 1.0.0
+### 0.0.1
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+Initial push to marketplace.
 
 -----------------------------------------------------------------------------------------------------------
 
