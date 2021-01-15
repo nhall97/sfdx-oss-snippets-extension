@@ -36,9 +36,12 @@ steps:
   #When main branch is updated, we want to deploy to marketplace
 
 - bash: |
-    git config --global user.email $(GIT_EMAIL)
-    git config --global user.name $(GIT_USER)
+    git config --global user.email "$(ENV_GIT_EMAIL)"
+    git config --global user.name "$(ENV_GIT_EMAIL)"
   displayName: Auth Git
+  env:
+    ENV_GIT_USER: $(GIT_USER)
+    ENV_GIT_EMAIL: $(GIT_EMAIL)
 
 - bash: |
     echo ">>> Publish"
@@ -46,7 +49,5 @@ steps:
   displayName: Publish to Marketplace
   condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Agent.OS'], 'Linux'))
   env:
-    GIT_EMAIL: $(GIT_EMAIL)
     VSCE_PAT: $(VSCE_PAT)
-    GIT_USER: $(GIT_USER)
     DISPLAY: ':99.0'
