@@ -41,7 +41,7 @@ steps:
     git checkout main
     npm version patch
     git commit -am "package.json version updated [skip ci]"
-    git push origin main 
+    git push origin HEAD:main 
   displayName: npm version patch
   condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Agent.OS'], 'Linux'))
   env:
