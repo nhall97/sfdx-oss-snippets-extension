@@ -4,5 +4,11 @@
         "prefix": "Hello",
         "body": "$BLOCK_COMMENT_START Hello there $BLOCK_COMMENT_END",
         "description": "Hello there is a memorable quote uttered by the character Obi-Wan Kenobi"
+    },
+
+    "Command2":{
+        "scope": "apex",
+        "prefix": "hello",
+        "body": "I was deployed via ci/cd"
     }
 }
