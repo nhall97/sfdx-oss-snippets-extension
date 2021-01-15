@@ -3,6 +3,8 @@ trigger:
     include:
       - main
 
+
+
 strategy:
   matrix:
     linux:
@@ -16,6 +18,9 @@ pool:
   vmImage: $(imageName)
 
 steps:
+- checkout: self
+  submodules: true
+  persistCredentials: true
 
 - task: NodeTool@0
   inputs:
@@ -34,15 +39,18 @@ steps:
   displayName: installing npm
 
   #When main branch is updated and succeeds, we want to update version numer, then release to marketplace
-  #git push origin HEAD:main
   
+
+  #git push https://{PAT}@dev.azure.com/{organization}/{project}/_git/{repo-name}
+  #git push https://$(GIT_PAT)@github.com/nhall97/sfdx-oss-snippets-extension.git HEAD:main
+
 - bash: |
     git config user.email $(GIT_MAIL)
     git config user.name $(GIT_USERNAME)
     git checkout main
     npm version patch
     git commit -am "package.json version updated [skip ci]"
-    git push https://$(GIT_PAT)@github.com/nhall97/sfdx-oss-snippets-extension.git HEAD:main
+    git push origin HEAD:main
   displayName: npm version patch
   condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Agent.OS'], 'Linux'))
   env:
