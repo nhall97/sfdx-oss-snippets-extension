@@ -45,6 +45,7 @@ steps:
     echo git status
     git push --force origin
   displayName: npm version patch
+  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Agent.OS'], 'Linux'))
   env:
     ENV_GIT_USER: $(GIT_USER)
     ENV_GIT_EMAIL: $(GIT_EMAIL)
