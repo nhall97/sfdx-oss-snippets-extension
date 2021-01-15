@@ -10,6 +10,9 @@
     "repository": {
         "directory": "https://github.com/nhall97/sfdx-oss-snippets-extension"
     },
+    "devDependencies": {
+        "vsce": "^1.83.0"
+    },
     "categories": [
         "Snippets"
     ],
@@ -22,9 +25,6 @@
         ]
     },
     "scripts": {
-        "deploy": "vsce publish"
-    },
-    "devDependencies": {
-        "vsce": "^1.83.0"
+        "deploy": "vsce publish --yarn"
     }
 }
