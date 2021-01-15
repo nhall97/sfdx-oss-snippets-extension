@@ -4,7 +4,11 @@
     "description": "Provides snippets for common sfdx packages when packages / 2nd generation packages may be seperate from your metadata repository",
     "version": "0.0.1",
     "engines": {
-        "vscode": "^1.52.0"
+        "vscode": "^1.44.0"
+    },
+    "publisher": "nhall97",
+    "repository": {
+        "directory": "https://github.com/nhall97/sfdx-oss-snippets-extension"
     },
     "categories": [
         "Snippets"
