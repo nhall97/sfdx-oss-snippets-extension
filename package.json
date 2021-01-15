@@ -20,5 +20,8 @@
                 "path": "./snippets/snippets.code-snippets"
             }
         ]
-    }
+    },
+    "scripts": {
+        "deploy": "vsce publish --yarn"
+      }
 }
