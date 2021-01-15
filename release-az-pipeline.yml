@@ -36,8 +36,8 @@ steps:
   #When main branch is updated and succeeds, we want to update version numer, then release to marketplace
 
 - bash: |
-    git config user.email "$(GIT_USER)"
-    git config user.name "$(GIT_EMAIL)"
+    git config user.email $(GIT_USER)
+    git config user.name $(GIT_EMAIL)
     git checkout main
     npm version patch
     git add -A
