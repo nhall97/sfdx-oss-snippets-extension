@@ -33,11 +33,19 @@ steps:
     npm install-ci-test
   displayName: installing npm
 
+  #When main branch is updated, we want to deploy to marketplace
+
+- bash: |
+  git config --global user.email $(GIT_EMAIL)
+  git config --global user.name $(GIT_USER)
+
 - bash: |
     echo ">>> Publish"
-    npm run deployMarketplace
+    npm run deployToMarketplace
   displayName: Publish to Marketplace
   condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Agent.OS'], 'Linux'))
   env:
+    GIT_EMAIL: $(GIT_EMAIL)
     VSCE_PAT: $(VSCE_PAT)
+    GIT_USER: $(GIT_USER)
     DISPLAY: ':99.0'

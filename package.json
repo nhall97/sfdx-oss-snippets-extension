@@ -25,7 +25,7 @@
         ]
     },
     "scripts": {
-        "predeployMarketplace": "npm version patch",
-        "deployMarketplace": "vsce publish"
+        "predeployToMarketplace": "npm version patch",
+        "deployToMarketplace": "vsce publish"
     }
 }
