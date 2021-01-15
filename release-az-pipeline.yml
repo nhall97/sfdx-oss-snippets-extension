@@ -1,7 +1,7 @@
 trigger:
-- refs/tags/your-tag-name
-pr:
-- '*'
+  branches:
+    include:
+      - main
 
 strategy:
   matrix:
@@ -42,11 +42,22 @@ steps:
     git add -a
     git commit -m "version upgraded"
     echo git status
-    git push && git push --tags
+    git push --force origin
   displayName: Update vscode marketplace version
   env:
     ENV_GIT_USER: $(GIT_USER)
     ENV_GIT_EMAIL: $(GIT_EMAIL)
+
+- task: GitHubRelease@1
+  inputs:
+    gitHubConnection: 'AZ-GH-NH'
+    repositoryName: 'nhall97/sfdx-oss-snippets-extension'
+    action: 'create'
+    target: '$(Build.SourceVersion)'
+    tagSource: 'gitTag'
+    tagPattern: 'v'
+    changeLogCompareToRelease: 'lastFullRelease'
+    changeLogType: 'commitBased'
 
 - bash: |
     echo ">>> Publish"
