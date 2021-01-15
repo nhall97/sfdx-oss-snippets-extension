@@ -36,8 +36,9 @@ steps:
   #When main branch is updated, we want to deploy to marketplace
 
 - bash: |
-    git config --global user.email "$(ENV_GIT_EMAIL)"
-    git config --global user.name "$(ENV_GIT_EMAIL)"
+    git config --global user.email "$(GIT_USER)"
+    git config --global user.name "$(GIT_EMAIL)"
+    npm version patch
   displayName: Auth Git
   env:
     ENV_GIT_USER: $(GIT_USER)
