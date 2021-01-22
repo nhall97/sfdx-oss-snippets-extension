@@ -7,59 +7,63 @@ strategy:
   matrix:
     linux:
       imageName: 'ubuntu-16.04'
-    mac:
-      imageName: 'macos-10.14'
-    windows:
-      imageName: 'vs2017-win2016'
 
 pool:
   vmImage: $(imageName)
 
-steps:
-- checkout: self
-  submodules: true
-  persistCredentials: true
+stages:
+- stage: updateAndRelease
+  condition: not(contains(variables['Build.SourceVersionMessage'], '[skip ci]'))
+  jobs: NpmUpdate
 
-- task: NodeTool@0
-  inputs:
-    versionSpec: '8.x'
-  displayName: 'Install Node.js'
+jobs:
+- job: updateAndRelease
+    steps:
+    - checkout: self
+      submodules: true
+      persistCredentials: true
+      
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '8.x'
+      displayName: 'Install Node.js'
 
-- bash: |
-    /usr/bin/Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
-    echo ">>> Started xvfb"
-  displayName: Start xvfb
-  condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux'))
+      #need a condition to not run if contains skipci
+      #condition: not(contains(variables['Build.SourceVersionMessage'], '[skip ci]'))
 
-- bash: |
-    echo ">>> install all dependencies"
-    npm install-ci-test
-  displayName: installing npm
+    - bash: |
+        /usr/bin/Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+        echo ">>> Started xvfb"
+      displayName: Start xvfb
+      condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux'))
 
-  #When main branch is updated and succeeds, we want to update version numer, then release to marketplace
-  
+    - bash: |
+        echo ">>> install all dependencies"
+        npm install-ci-test
+      displayName: installing npm
 
-  #git push https://{PAT}@dev.azure.com/{organization}/{project}/_git/{repo-name}
-  #git push https://$(GIT_PAT)@github.com/nhall97/sfdx-oss-snippets-extension.git HEAD:main
+      #When main branch is updated and succeeds, we want to update version numer, then release to marketplace
+      
+      #git push https://{PAT}@dev.azure.com/{organization}/{project}/_git/{repo-name}
+      #git push https://$(GIT_PAT)@github.com/nhall97/sfdx-oss-snippets-extension.git HEAD:main
 
-- bash: |
-    git config user.email $(GIT_MAIL)
-    git config user.name $(GIT_USERNAME)
-    git checkout main
-    npm version patch
-    git commit -a -m "[skip ci] package.json version updated"
-    git push origin HEAD:main
-  displayName: npm version patch
-  condition: and(succeeded(), eq(variables['Agent.OS'], 'Linux'), not(contains(variables['Build.SourceVersionMessage'], '[skip ci]')))
-  env:
-    ENV_GIT_USER: $(GIT_USERNAME)
-    ENV_GIT_EMAIL: $(GIT_EMAIL)
+    - bash: |
+        git config user.email $(GIT_MAIL)
+        git config user.name $(GIT_USERNAME)
+        git checkout main
+        npm version patch -m "new version: %s [skip ci]. Releasing to marketplace from this tag"
+        git push origin HEAD:main
+        git push origin --tags
+      displayName: npm version patch
+      env:
+        ENV_GIT_USER: $(GIT_USERNAME)
+        ENV_GIT_EMAIL: $(GIT_EMAIL)
 
-- bash: |
-    echo ">>> Publish"
-    npm run deployToMarketplace
-  displayName: Publish to Marketplace
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Agent.OS'], 'Linux'))
-  env:
-    VSCE_PAT: $(VSCE_PAT)
-    DISPLAY: ':99.0'
+    - bash: |
+        echo ">>> Publish"
+        npm run deployToMarketplace
+      displayName: Publish new version to Marketplace
+      condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Agent.OS'], 'Linux'))
+      env:
+        VSCE_PAT: $(VSCE_PAT)
+        DISPLAY: ':99.0'
