@@ -3,21 +3,14 @@ trigger:
     include:
       - main
 
-strategy:
-  matrix:
-    linux:
-      imageName: 'ubuntu-16.04'
-
-pool:
-  vmImage: $(imageName)
-
 stages:
 - stage: updateAndRelease
   condition: not(contains(variables['Build.SourceVersionMessage'], '[skip ci]'))
-  jobs: NpmUpdate
-
-jobs:
-- job: updateAndRelease
+  jobs:
+  - job: setup
+    pool:
+      vmImage: 'ubuntu-16.04'
+  - job: updateAndRelease
     steps:
     - checkout: self
       submodules: true
