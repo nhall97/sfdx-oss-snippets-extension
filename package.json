@@ -2,7 +2,7 @@
     "name": "sfdx-oss-snippets-extension",
     "displayName": "sfdx-oss-snippets-extension",
     "description": "Provides snippets for common sfdx packages when packages / 2nd generation packages may be seperate from your metadata repository",
-    "version": "0.0.42",
+    "version": "0.0.43",
     "engines": {
         "vscode": "^1.44.0"
     },
