@@ -10,5 +10,12 @@
         "scope": "apex",
         "prefix": "hello",
         "body": "I was deployed via ci/cd"
+    },
+
+    "Log Example": {
+        "scope": "apex",
+        "prefix": "Logger.logException(Exception ex, String msg, String sourceclass, String sourcemethod",
+        "body": "Logger.logException;",
+        "description": "Log an exception"
     }
 }
